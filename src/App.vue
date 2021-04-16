@@ -9,7 +9,11 @@
       div cũng thay đổi theo mặc dù ta k thay đổi giá trị của input ->Thay đổi theo chiều từ trên xuống dưới
       -> Điểm khác nhau cả vue và react
      -->
-    <input type='text' v-model='name'>
+    <input ref='testName' type='text' v-model='name'>
+    <input type='text' v-model='channel[1].name'>
+    <!-- click vao button thi text trong input thu nhat doi thanh Nguyen Van C. Khi do bien name trong
+    phan return data cung thay doi theo-->
+    <button v-on:click="name='Nguyen Van C'">CLick to change name</button>
     <!--
       tên v-show phải đặt như thế do là thuộc tính của vue. Nếu true thì hiện, k thì thôi
     -->
@@ -17,6 +21,18 @@
     <button @click="isShow=!isShow">Click to hidden or show</button>
     <input type='text' v-model='name' :disabled='iputDisable' :class="{text_red:iputDisable}">
     <button @click="iputDisable=!iputDisable">Open/Close</button>
+    <h2>To do list</h2>
+    <!--Muon hien ra moi item la mot the p-->
+    <p v-for="(task, key) in tasks" :key="key">
+    <!-- v-model dung voi checkbox thi khi nhan se chuyen gia tri nguoc lai, true sang false, false sang true-->
+      <input type="checkbox" v-model='task.done'> 
+      <!-- co the viet 
+        <span v-bind:style="[task.done?{'text-decoration': 'line-through'}:{'text-decoration': 'none'}]">{{task.todo}}</span>
+        hoac
+        <span v-bind:class="{done: task.done}">{{task.todo}}</span> neu task.done la true thi co class done
+      -->
+      <span v-bind:style="[task.done&&{'text-decoration': 'line-through'}]">{{task.todo}}</span>
+    </p>
   </div>
 </template>
 
@@ -29,10 +45,16 @@ export default {
   data(){
     return {
       name:'Nguyen Van A',
+      channel:[{name:'Nguyen Van A'},{name:'Nguyen Van B'}],
       isShow:true,
       id:'test',
       xyz:'hello',
       iputDisable:true,
+      tasks:[
+        {todo:'go to bed', done:false}, 
+        {todo: 'go to school', done:false},
+        {todo:'listening to music', done:false},
+        {todo:'watching tv',done:false}]
     }
   },
   /**
